@@ -1,5 +1,7 @@
 package cn.owem.wecare.service;
 
+import cn.owem.wecare.mapper.PostingMapper;
+import cn.owem.wecare.pojo.Posting;
 import cn.owem.wecare.pojo.User;
 import cn.owem.wecare.utils.BusinessException;
 import com.alibaba.fastjson.JSONObject;
@@ -22,7 +24,13 @@ public class MyService {
     @Resource
     UserMapper userMapper;
     @Resource
+    PostingMapper postingMapper;
+    @Resource
     WeChatUtil weChatUtil;
+
+    public List<Posting> selectAllPosting(String userId) {
+        return postingMapper.selectAllPostingById(userId);
+    }
 
     public User updateUser(User updateUser) throws BusinessException {
         if (updateUser.getUserId().equals("") || userMapper.selectCount(new QueryWrapper<User>().eq("user_id", updateUser.getUserId())) == 0L) {

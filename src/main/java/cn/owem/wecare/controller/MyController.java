@@ -1,6 +1,7 @@
 package cn.owem.wecare.controller;
 
 import cn.owem.wecare.pojo.Channel;
+import cn.owem.wecare.pojo.Posting;
 import cn.owem.wecare.pojo.User;
 import cn.owem.wecare.service.MyService;
 import cn.owem.wecare.utils.BusinessException;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Owem
@@ -40,5 +42,10 @@ public class MyController {
             e.printStackTrace();
         }
         return user;
+    }
+
+    @GetMapping("/my/posting")
+    public List<Posting> selectAllPosting(String userId) {
+        return myService.selectAllPosting(userId);
     }
 }

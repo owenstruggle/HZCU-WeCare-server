@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  * @description TODO
  **/
 @Data
-@NoArgsConstructor // 生成全参数构造函数
+@NoArgsConstructor
 public class User {
     @TableId
     private String userId;
