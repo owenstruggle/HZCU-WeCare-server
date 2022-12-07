@@ -19,7 +19,7 @@ public class Channel {
     private Long channelCategoryId;
     private String channelName;
     private String channelImageSrc;
-    private boolean isSwiper;
+    private Boolean isSwiper;
     private String channelDescription;
     private String detailSrc;
     @TableField(exist = false)

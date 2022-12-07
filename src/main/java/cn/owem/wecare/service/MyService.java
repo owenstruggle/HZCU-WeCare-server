@@ -1,7 +1,9 @@
 package cn.owem.wecare.service;
 
 import cn.owem.wecare.mapper.PostingMapper;
+import cn.owem.wecare.mapper.SubscriptionMapper;
 import cn.owem.wecare.pojo.Posting;
+import cn.owem.wecare.pojo.Subscription;
 import cn.owem.wecare.pojo.User;
 import cn.owem.wecare.utils.BusinessException;
 import com.alibaba.fastjson.JSONObject;
@@ -26,7 +28,17 @@ public class MyService {
     @Resource
     PostingMapper postingMapper;
     @Resource
+    SubscriptionMapper subscriptionMapper;
+    @Resource
     WeChatUtil weChatUtil;
+
+    public Long updateSubscriptionState(Long subscriptionId, boolean isAccept) {
+        return subscriptionMapper.updateSubscriptionState(subscriptionId, isAccept);
+    }
+
+    public List<Subscription> selectAllSubscription(String userId) {
+        return subscriptionMapper.selectAllSubscriptionsById(userId);
+    }
 
     public List<Posting> selectAllPosting(String userId) {
         return postingMapper.selectAllPostingById(userId);

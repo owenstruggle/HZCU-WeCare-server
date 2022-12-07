@@ -1,15 +1,14 @@
 package cn.owem.wecare.controller;
 
-import cn.owem.wecare.pojo.Channel;
 import cn.owem.wecare.pojo.Posting;
+import cn.owem.wecare.pojo.Subscription;
 import cn.owem.wecare.pojo.User;
+import cn.owem.wecare.pojo.WXUserInfo;
 import cn.owem.wecare.service.MyService;
 import cn.owem.wecare.utils.BusinessException;
-import cn.owem.wecare.pojo.WXUserInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -47,5 +46,15 @@ public class MyController {
     @GetMapping("/my/posting")
     public List<Posting> selectAllPosting(String userId) {
         return myService.selectAllPosting(userId);
+    }
+
+    @GetMapping("/my/subscription")
+    public List<Subscription> selectAllSubscription(String userId) {
+        return myService.selectAllSubscription(userId);
+    }
+
+    @PutMapping("/my/subscription/state")
+    public Long updateSubscriptionState(@RequestParam("subscriptionId") Long subscriptionId, @RequestParam("isAccept") Boolean isAccept) {
+        return myService.updateSubscriptionState(subscriptionId, isAccept);
     }
 }
