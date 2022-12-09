@@ -6,6 +6,8 @@ import cn.owem.wecare.pojo.User;
 import cn.owem.wecare.pojo.WXUserInfo;
 import cn.owem.wecare.service.MyService;
 import cn.owem.wecare.utils.BusinessException;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -44,8 +46,12 @@ public class MyController {
     }
 
     @GetMapping("/my/posting")
-    public List<Posting> selectAllPosting(String userId) {
-        return myService.selectAllPosting(userId);
+    public PageInfo<Posting> selectAllPosting(String userId,
+                                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                          @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Posting> list = myService.selectAllPosting(userId);
+        return new PageInfo<>(list);
     }
 
     @GetMapping("/my/subscription")

@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Owem
@@ -39,12 +41,20 @@ public class ShopService {
         return channelMapper.searchChannelByName(query);
     }
 
-    public Channel selectChannelById(Long channelId) throws IOException {
+    public Channel selectChannelById(Long channelId) {
         Channel channel = channelMapper.selectById(channelId);
         if (channel.getDetailSrc() != null) {
             String path = localSrc + channel.getDetailSrc();
-            String introduce = Files.readString(Paths.get(path));
-            channel.setChannelIntroduce(introduce);
+
+            // 仅支持 Java11
+            // String introduce = Files.readString(Paths.get(path));
+            String content = "";
+            try (Stream<String> lines = Files.lines(Paths.get(path))) {
+                content = lines.collect(Collectors.joining(System.lineSeparator()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            channel.setChannelIntroduce(content);
         }
         return channel;
     }

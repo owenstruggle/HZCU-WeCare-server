@@ -18,7 +18,8 @@ public class Trace {
     @TableId
     private Long traceId;
     private String userId;
-    private String location;
+    private double longitude;
+    private double latitude;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @TableField(jdbcType = JdbcType.TIMESTAMP)
     private Date traceTime;

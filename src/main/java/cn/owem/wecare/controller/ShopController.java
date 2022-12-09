@@ -35,7 +35,7 @@ public class ShopController {
     }
 
     @GetMapping("shop/search")
-    public PageInfo searchAllChannelData(@RequestParam(value = "query") String query,
+    public PageInfo<Channel> searchAllChannelData(@RequestParam(value = "query") String query,
                                          @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
                                          @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
