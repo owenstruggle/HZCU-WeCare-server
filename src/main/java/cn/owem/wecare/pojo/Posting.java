@@ -20,4 +20,6 @@ public class Posting {
     private String postingImageSrc;
     private String postingDescription;
     private String additionalContent;
+    @TableField(exist = false)
+    private User user;
 }

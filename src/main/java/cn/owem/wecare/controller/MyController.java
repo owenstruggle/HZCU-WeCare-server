@@ -6,12 +6,17 @@ import cn.owem.wecare.pojo.User;
 import cn.owem.wecare.pojo.WXUserInfo;
 import cn.owem.wecare.service.MyService;
 import cn.owem.wecare.utils.BusinessException;
+import cn.owem.wecare.utils.UploadUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Owem
@@ -22,6 +27,18 @@ import java.util.List;
 public class MyController {
     @Resource
     private MyService myService;
+    @Resource
+    UploadUtil uploadUtil;
+
+    @PostMapping("/my/uploadHeadPortrait")
+    public String uploadHeadPortrait(@RequestParam("fileUpload") MultipartFile fileUpload, HttpServletRequest request, String userId) {
+        HashMap<String, String> map = uploadUtil.uploadMedia(fileUpload, request, "user/head_portrait/");
+        if (myService.uploadHeadPortrait(userId, map.get("url").split("share")[1]) == 1L) {
+            return map.get("url");
+        } else {
+            return null;
+        }
+    }
 
     @PostMapping("/my/user/wxlogin")
     public User wxLogin(@RequestBody WXUserInfo wxUserInfo) {
@@ -32,6 +49,11 @@ public class MyController {
             System.out.println(e.getDefaultMessage());
         }
         return user;
+    }
+
+    @GetMapping("/my/user")
+    public User getUser(String userId) {
+        return myService.getUser(userId);
     }
 
     @PutMapping("/my/user")
@@ -47,8 +69,8 @@ public class MyController {
 
     @GetMapping("/my/posting")
     public PageInfo<Posting> selectAllPosting(String userId,
-                                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                          @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize) {
+                                              @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                              @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Posting> list = myService.selectAllPosting(userId);
         return new PageInfo<>(list);

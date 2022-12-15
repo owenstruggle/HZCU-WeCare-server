@@ -21,4 +21,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("SELECT * FROM `user` WHERE user_id IN (SELECT accept_user_id FROM relationship WHERE user_id = '${userId}') OR user_id IN (SELECT user_id FROM relationship WHERE accept_user_id = '${userId}')")
     List<User> selectAllContacts(String userId);
+
+    @Update("update user set avatar_url = '${avatarUrl}' where user_id = '${userId}'")
+    Long uploadHeadPortrait(String userId, String avatarUrl);
 }

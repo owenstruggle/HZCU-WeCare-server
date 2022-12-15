@@ -32,6 +32,14 @@ public class MyService {
     @Resource
     WeChatUtil weChatUtil;
 
+    public User getUser(String userId) {
+        return userMapper.selectById(userId);
+    }
+
+    public Long uploadHeadPortrait(String userId, String avatarUrl) {
+        return userMapper.uploadHeadPortrait(userId, avatarUrl);
+    }
+
     public Long updateSubscriptionState(Long subscriptionId, boolean isAccept) {
         return subscriptionMapper.updateSubscriptionState(subscriptionId, isAccept);
     }

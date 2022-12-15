@@ -79,16 +79,10 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- 添加 swagger2 相关功能 -->
+        <!-- 添加 swagger3 相关功能 -->
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <!-- 添加 swagger-ui 相关功能 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
+            <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
         </dependency>
     </dependencies>
