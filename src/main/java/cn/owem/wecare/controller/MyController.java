@@ -1,9 +1,6 @@
 package cn.owem.wecare.controller;
 
-import cn.owem.wecare.pojo.Posting;
-import cn.owem.wecare.pojo.Subscription;
-import cn.owem.wecare.pojo.User;
-import cn.owem.wecare.pojo.WXUserInfo;
+import cn.owem.wecare.pojo.*;
 import cn.owem.wecare.service.MyService;
 import cn.owem.wecare.utils.BusinessException;
 import cn.owem.wecare.utils.UploadUtil;
@@ -14,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +27,16 @@ public class MyController {
     private MyService myService;
     @Resource
     UploadUtil uploadUtil;
+
+    @PutMapping("/my/agree/{relationshipId}")
+    public Long updateRelationshipAccept(@PathVariable Long relationshipId) {
+        return myService.updateRelationshipAccept(relationshipId);
+    }
+
+    @GetMapping("/my/application")
+    public List<Relationship> selectAllApplications(@RequestParam(value = "userId") String userId) {
+        return myService.selectAllApplications(userId);
+    }
 
     @PostMapping("/my/uploadHeadPortrait")
     public String uploadHeadPortrait(@RequestParam("fileUpload") MultipartFile fileUpload, HttpServletRequest request, String userId) {
