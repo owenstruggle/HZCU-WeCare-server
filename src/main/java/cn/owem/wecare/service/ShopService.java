@@ -2,6 +2,7 @@ package cn.owem.wecare.service;
 
 import cn.owem.wecare.mapper.ChannelCategoryMapper;
 import cn.owem.wecare.mapper.ChannelMapper;
+import cn.owem.wecare.mapper.SubscriptionMapper;
 import cn.owem.wecare.pojo.Channel;
 import cn.owem.wecare.pojo.ChannelCategory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,9 +26,19 @@ public class ShopService {
     @Value("${userSetting.localSrc}")
     String localSrc;
     @Resource
-    private ChannelMapper channelMapper;
+    ChannelMapper channelMapper;
     @Resource
-    private ChannelCategoryMapper channelCategoryMapper;
+    ChannelCategoryMapper channelCategoryMapper;
+    @Resource
+    SubscriptionMapper subscriptionMapper;
+
+    public Long addSubscription(String userId, String acceptUserId, Long channelId, String subscriptionTime) {
+        // 判断被订阅者是否已经订阅该频道, '%' 代表这里对订阅者没有要求
+        if (subscriptionMapper.selectSubscriptions("%", acceptUserId, channelId).size() == 0) {
+            return subscriptionMapper.insertSubscription(userId, acceptUserId, channelId, subscriptionTime);
+        }
+        return -1L;
+    }
 
     public List<Channel> selectAllSwiperData() {
         return channelMapper.selectSwiperChannel();

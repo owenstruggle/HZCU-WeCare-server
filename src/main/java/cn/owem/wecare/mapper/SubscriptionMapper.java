@@ -33,4 +33,10 @@ public interface SubscriptionMapper {
 
     @Update("update subscription set is_accept = ${isAccept} where subscription_id = ${subscriptionId}")
     Long updateSubscriptionState(Long subscriptionId, boolean isAccept);
+
+    @Insert("insert into subscription(user_id, accept_user_id, channel_id, subscription_time) value ('${userId}', '${acceptUserId}', ${channelId}, '${subscriptionTime}')")
+    Long insertSubscription(String userId, String acceptUserId, Long channelId, String subscriptionTime);
+
+    @Select("select * from subscription where user_id like '${userId}' and accept_user_id = '${acceptUserId}' and channel_id = ${channelId}")
+    List<Subscription> selectSubscriptions(String userId, String acceptUserId, Long channelId);
 }
