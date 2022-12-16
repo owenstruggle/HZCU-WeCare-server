@@ -31,7 +31,7 @@ public interface PostingMapper extends BaseMapper<Posting> {
     })
     List<Posting> selectAllPostingById(String userId);
 
-    @Select("select * from posting, trace where trace.trace_id = posting.trace_id and date(trace_time) = date(now()) and (user_id in (select accept_user_id from relationship where relationship.user_id = '${userId}') or user_id in (select user_id from relationship where accept_user_id = '${userId}') or user_id = '${userId}')")
+    @Select("select * from posting, trace where trace.trace_id = posting.trace_id and date(trace_time) = date(now()) and (user_id in (select accept_user_id from relationship where relationship.user_id = '${userId}' and is_accept = true) or user_id in (select user_id from relationship where accept_user_id = '${userId}' and is_accept = true) or user_id = '${userId}')")
     @Results({
             @Result(column = "posting_id", property = "postingId"),
             @Result(column = "trace_id", property = "traceId"),

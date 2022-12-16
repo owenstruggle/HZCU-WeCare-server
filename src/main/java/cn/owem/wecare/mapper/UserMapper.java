@@ -19,9 +19,12 @@ public interface UserMapper extends BaseMapper<User> {
     @Update("UPDATE `user` SET nick_name = '${nickName}', gender = ${gender}, phone_number = '${phoneNumber}', city = '${city}', province = '${province}', country = '${country}' WHERE user_id = '${userId}'")
     Long updateUser(User updatedUser);
 
-    @Select("SELECT * FROM `user` WHERE user_id IN (SELECT accept_user_id FROM relationship WHERE user_id = '${userId}') OR user_id IN (SELECT user_id FROM relationship WHERE accept_user_id = '${userId}')")
+    @Select("SELECT * FROM `user` WHERE user_id IN (SELECT accept_user_id FROM relationship WHERE user_id = '${userId}' and is_accept = true) OR user_id IN (SELECT user_id FROM relationship WHERE accept_user_id = '${userId}' and is_accept = true)")
     List<User> selectAllContacts(String userId);
 
     @Update("update user set avatar_url = '${avatarUrl}' where user_id = '${userId}'")
     Long uploadHeadPortrait(String userId, String avatarUrl);
+
+    @Select("select user_id from user where phone_number = '${phoneNumber}'")
+    String selectByPhoneNumber(String phoneNumber);
 }

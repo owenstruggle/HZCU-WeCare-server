@@ -3,9 +3,7 @@ package cn.owem.wecare.controller;
 import cn.owem.wecare.pojo.Trace;
 import cn.owem.wecare.pojo.User;
 import cn.owem.wecare.service.ContactsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,6 +17,16 @@ import java.util.List;
 public class ContactsController {
     @Resource
     ContactsService contactsService;
+
+    @PutMapping("/contacts")
+    public Long addRelationship(String userId, String phoneNumber) {
+        return contactsService.addRelationship(userId, phoneNumber);
+    }
+
+    @DeleteMapping("/contacts")
+    public Long deleteRelationship(String userId, String acceptUserId) {
+        return contactsService.deleteRelationship(userId, acceptUserId);
+    }
 
     @GetMapping("/contacts")
     public List<User> selectAllContacts(@RequestParam String userId) {
