@@ -19,15 +19,16 @@ public class UploadUtil {
     @Value("${userSetting.localSrc}")
     private String localSrc;
 
-    public HashMap<String, String> uploadMedia(MultipartFile uploadFile, HttpServletRequest req, String imgSrc) {
+    public HashMap<String, String> uploadMedia(MultipartFile uploadFile, HttpServletRequest req, String src) {
         //获取文件名
         String fileName = uploadFile.getOriginalFilename();
         //获取文件后缀名
+        assert fileName != null;
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         //重新生成文件名
         fileName = UUID.randomUUID() + suffixName;
         //指定本地文件夹存储图片
-        String filePath = localSrc + imgSrc;
+        String filePath = localSrc + src;
         File file = new File(filePath, fileName);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -35,10 +36,9 @@ public class UploadUtil {
 
         HashMap<String, String> ssMap = new HashMap<>();
         try {
-            //将图片保存到static文件夹里
             file.createNewFile();
             uploadFile.transferTo(new File(filePath + fileName));
-            ssMap.put("url", "https://" + req.getRemoteHost() + ":" + req.getServerPort() + "/share/" + imgSrc + fileName);
+            ssMap.put("url", "https://" + req.getRemoteHost() + ":" + req.getServerPort() + "/share/" + src + fileName);
             ssMap.put("fileName", fileName);
         } catch (Exception e) {
             e.printStackTrace();

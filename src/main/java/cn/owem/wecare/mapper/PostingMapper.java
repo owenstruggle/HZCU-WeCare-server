@@ -22,8 +22,9 @@ public interface PostingMapper extends BaseMapper<Posting> {
             @Result(column = "trace_id", property = "traceId"),
             @Result(column = "posting_name", property = "postingName"),
             @Result(column = "posting_image_src", property = "postingImageSrc"),
+            @Result(column = "posting_media_src", property = "postingMediaSrc"),
             @Result(column = "posting_description", property = "postingDescription"),
-            @Result(column = "additional_content", property = "additionalContent"),
+            @Result(column = "media_type", property = "mediaType"),
             @Result(column = "trace_id", property = "trace", javaType = Trace.class,
                     one = @One(select = "cn.owem.wecare.mapper.TraceMapper.selectById")),
             @Result(column = "user_id", property = "user", javaType = User.class,
@@ -37,12 +38,16 @@ public interface PostingMapper extends BaseMapper<Posting> {
             @Result(column = "trace_id", property = "traceId"),
             @Result(column = "posting_name", property = "postingName"),
             @Result(column = "posting_image_src", property = "postingImageSrc"),
+            @Result(column = "posting_media_src", property = "postingMediaSrc"),
             @Result(column = "posting_description", property = "postingDescription"),
-            @Result(column = "additional_content", property = "additionalContent"),
+            @Result(column = "media_type", property = "mediaType"),
             @Result(column = "trace_id", property = "trace", javaType = Trace.class,
                     one = @One(select = "cn.owem.wecare.mapper.TraceMapper.selectById")),
             @Result(column = "user_id", property = "user", javaType = User.class,
                     one = @One(select = "cn.owem.wecare.mapper.UserMapper.selectById")),
     })
     List<Posting> selectAllTodayPostingById(String userId);
+
+    @Insert("insert into posting(trace_id, posting_name, posting_image_src, posting_media_src, posting_description, media_type) value(#{traceId}, #{postingName}, #{postingImageSrc}, #{postingMediaSrc}, #{postingDescription}, #{mediaType})")
+    Long insertPosting(Posting posting);
 }

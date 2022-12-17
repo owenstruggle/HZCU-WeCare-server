@@ -2,15 +2,17 @@ package cn.owem.wecare.controller;
 
 import cn.owem.wecare.pojo.Comment;
 import cn.owem.wecare.pojo.Posting;
+import cn.owem.wecare.pojo.Trace;
 import cn.owem.wecare.service.HomeService;
+import cn.owem.wecare.utils.UploadUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,6 +24,24 @@ import java.util.List;
 public class HomeController {
     @Resource
     HomeService homeService;
+    @Resource
+    UploadUtil uploadUtil;
+
+    @PostMapping("/home/posting")
+    public Long createPosting(@RequestBody Posting posting) {
+        return homeService.createPosting(posting);
+    }
+
+    @PostMapping("/home/uploadPostingMedia")
+    public String uploadHeadPortrait(@RequestParam("fileUpload") MultipartFile fileUpload, HttpServletRequest request) {
+        HashMap<String, String> map = uploadUtil.uploadMedia(fileUpload, request, "posting/media/");
+        return map.get("url");
+    }
+
+    @PostMapping("/home/trace")
+    public Trace createTrace(@RequestBody Trace trace) {
+        return homeService.createTrace(trace);
+    }
 
     @GetMapping("/home/todayposting")
     public PageInfo<Posting> selectAllTodayPosting(@RequestParam(value = "userId") String userId,

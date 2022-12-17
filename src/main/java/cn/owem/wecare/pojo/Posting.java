@@ -19,7 +19,8 @@ public class Posting {
     private String postingName;
     private String postingImageSrc;
     private String postingDescription;
-    private String additionalContent;
+    private int mediaType;
+    private String postingMediaSrc;
     @TableField(exist = false)
     private User user;
 }
