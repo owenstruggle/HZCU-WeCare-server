@@ -3,14 +3,13 @@ package cn.owem.wecare.service;
 import cn.owem.wecare.mapper.PostingMapper;
 import cn.owem.wecare.mapper.RelationshipMapper;
 import cn.owem.wecare.mapper.SubscriptionMapper;
+import cn.owem.wecare.mapper.UserMapper;
 import cn.owem.wecare.pojo.*;
 import cn.owem.wecare.utils.BusinessException;
+import cn.owem.wecare.utils.WeChatUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import cn.owem.wecare.mapper.UserMapper;
-import cn.owem.wecare.utils.WeChatUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -89,7 +88,7 @@ public class MyService {
             User user = new User("wx_" + openid,
                                  openid,
                                  userInfo.getString("nickName"),
-                                 userInfo.getString("avatarUrl"),
+                                 "/user/head_portrait/default.png",  // userInfo.getString("avatarUrl"),
                                  userInfo.getBoolean("gender"),
                                  userInfo.getString("city"),
                                  userInfo.getString("province"),
