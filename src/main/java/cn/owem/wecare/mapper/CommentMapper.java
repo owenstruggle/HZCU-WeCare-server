@@ -27,4 +27,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
                     one = @One(select = "cn.owem.wecare.mapper.UserMapper.selectById")),
     })
     List<Comment> selectAllCommentByPostingId(Long postingId);
+
+    @Insert("insert into comment(trace_id, posting_id, content) value(#{traceId}, #{postingId}, #{content})")
+    Long insertComment(Comment comment);
 }

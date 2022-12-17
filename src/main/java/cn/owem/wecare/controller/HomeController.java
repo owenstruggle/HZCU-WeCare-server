@@ -27,6 +27,11 @@ public class HomeController {
     @Resource
     UploadUtil uploadUtil;
 
+    @PostMapping("/home/comment")
+    public Long createComment(@RequestBody Comment comment) {
+        return homeService.createComment(comment);
+    }
+
     @PostMapping("/home/posting")
     public Long createPosting(@RequestBody Posting posting) {
         return homeService.createPosting(posting);

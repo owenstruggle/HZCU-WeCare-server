@@ -26,6 +26,10 @@ public class HomeService {
     @Resource
     TraceMapper traceMapper;
 
+    public Long createComment(Comment comment) {
+        return commentMapper.insertComment(comment);
+    }
+
     public Long createPosting(Posting posting) {
         return postingMapper.insertPosting(posting);
     }
