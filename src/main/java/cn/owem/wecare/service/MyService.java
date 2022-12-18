@@ -32,6 +32,15 @@ public class MyService {
     @Resource
     RelationshipMapper relationshipMapper;
 
+    public Long updatePhoneNumber(String userId, String phoneNumber) {
+        // 查询是否存在 phoneNumber
+        String oldUserId = userMapper.selectByPhoneNumber(phoneNumber);
+        if (oldUserId != null && !oldUserId.equals("")) {
+            return -1L;
+        }
+        return userMapper.updatePhoneNumber(userId, phoneNumber);
+    }
+
     public Long updateRelationshipAccept(Long relationshipId) {
         return relationshipMapper.updateRelationshipAccept(relationshipId);
     }

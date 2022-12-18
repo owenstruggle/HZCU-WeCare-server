@@ -28,6 +28,11 @@ public class MyController {
     @Resource
     UploadUtil uploadUtil;
 
+    @PutMapping("/my/user/phoneNumber")
+    public Long updatePhoneNumber(@RequestBody User user) {
+        return myService.updatePhoneNumber(user.getUserId(), user.getPhoneNumber());
+    }
+
     @PutMapping("/my/agree/{relationshipId}")
     public Long updateRelationshipAccept(@PathVariable Long relationshipId) {
         return myService.updateRelationshipAccept(relationshipId);

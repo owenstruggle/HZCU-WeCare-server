@@ -27,4 +27,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select user_id from user where phone_number = '${phoneNumber}'")
     String selectByPhoneNumber(String phoneNumber);
+
+    @Update("update user set phone_number = '${phoneNumber}' where user_id = '${userId}'")
+    Long updatePhoneNumber(String userId, String phoneNumber);
 }
